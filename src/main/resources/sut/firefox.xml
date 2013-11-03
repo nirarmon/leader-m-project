@@ -1,0 +1,12 @@
+<sut>
+	<webDriver>
+		<class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
+		<webDriver>FIREFOX_DRIVER</webDriver>
+		<domain>http://www.1112.net/lastpage.html</domain>
+		<seleniumTimeOut>15000</seleniumTimeOut>
+	</webDriver>
+	<parser>
+	    <class>com.leaderm.infra.FileParser</class>
+	    <fileName>c:\dev\sites.txt</fileName>
+	</parser>
+</sut>
