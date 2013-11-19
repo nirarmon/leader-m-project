@@ -1,6 +1,11 @@
 package com.leaderm.infra;
 
+import java.util.Random;
+
+import jsystem.utils.RandomUtils;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +17,7 @@ import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 public class FiveFieldsLendingPage extends AbstractPage {
 
 	@FindBy(id = "fname")
-	WebElement nameField;
+	WebElement nameField;	
 
 	@FindBy(id = "age")
 	WebElement ageSelect;
@@ -43,25 +48,41 @@ public class FiveFieldsLendingPage extends AbstractPage {
 	 * @param name
 	 * @param phone
 	 * @param email
+	 * @throws Exception 
 	 */
-	public boolean fillDetails(String name, String phone, String email) {
+	public boolean fillDetails(String name, String email) throws Exception {
 		nameField.sendKeys(name);
-		phoneField.sendKeys(phone);
+		phoneField.sendKeys(createRandomPhoneNumber());
 		emailField.sendKeys(email);
 		//select the first town by default
 		Select select = new Select(townSelect);
-		select.selectByIndex(1);
+		select.selectByIndex(3);
 		//Select the first age
 		select = new Select(ageSelect);
 		select.selectByIndex(1);
 		// submit form
 		submitBtn.submit();
-		try {
+				try {
 			driver.findElement(By.id("thankyou"));
 			return true;
-		} catch (ElementNotFoundException e) {
+		} catch (Exception e) {
 			throw e;
 		}
 	}
+	
+	/** 
+	 * this function creates a random number with 10 digits
+	 * @return
+	 */
+	private String createRandomPhoneNumber(){
+		int[] array = RandomUtils.getSeveralRandomInts(0, 9, 10, new Random());
+		StringBuffer buffer = new StringBuffer();
+		for (int i : array){
+			buffer.append(""+i);
+		}
+		return buffer.toString();
+
+	}
+
 
 }
