@@ -10,12 +10,15 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import jsystem.utils.FileUtils;
 import junit.framework.SystemTestCase4;
 
 import org.jsystem.webdriver_so.WebDriverSystemObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import com.leaderm.infra.FileParser;
@@ -69,10 +72,13 @@ public class LendingPageMonitor extends SystemTestCase4 {
 	}
 
 	protected File takeScreenshot(String title) throws Exception {
+		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		// Now you can do whatever you need to do with it, for example copy somewhere
 		File capture = new File(report.getCurrentTestFolder()+"/"+driver.getTitle() + ".png");
-		BufferedImage image = new Robot().createScreenCapture(new Rectangle(
-				Toolkit.getDefaultToolkit().getScreenSize()));
-		ImageIO.write(image, "png", capture);
+		FileUtils.copyFile(scrFile, capture);	
+		// BufferedImage image = new Robot().createScreenCapture(new Rectangle(
+		// Toolkit.getDefaultToolkit().getScreenSize()));
+		// ImageIO.write(image, "png", capture);
 		return capture;
 	}
 }
