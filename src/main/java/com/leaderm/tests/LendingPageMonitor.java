@@ -79,6 +79,6 @@ public class LendingPageMonitor extends SystemTestCase4 {
 		// BufferedImage image = new Robot().createScreenCapture(new Rectangle(
 		// Toolkit.getDefaultToolkit().getScreenSize()));
 		// ImageIO.write(image, "png", capture);
-		return driver.getTitle();
+		return capture.getName();
 	}
 }
