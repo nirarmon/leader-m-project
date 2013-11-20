@@ -10,19 +10,16 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import jsystem.extensions.report.html.Report;
 import junit.framework.SystemTestCase4;
 
 import org.jsystem.webdriver_so.WebDriverSystemObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 import com.leaderm.infra.FileParser;
 import com.leaderm.infra.FiveFieldsLendingPage;
-import com.thoughtworks.qdox.tools.QDoxTester.Reporter;
 
 public class LendingPageMonitor extends SystemTestCase4 {
 
