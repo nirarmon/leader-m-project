@@ -62,16 +62,16 @@ public class LendingPageMonitor extends SystemTestCase4 {
 			page.fillDetails("Test", "test@test.com");
 			report.report(url + " Was Ok");
 		} catch (Exception e) {
-			File capture = takeScreenshot(url);
+			String captureFileName= takeScreenshot(url);
 			String ex = e.getMessage().toString();
 			report.report(ex, report.FAIL);
 			report.addLink("Click Here for Screenshot",
-					capture.getAbsolutePath());
+					captureFileName);
 
 		}
 	}
 
-	protected File takeScreenshot(String title) throws Exception {
+	protected String takeScreenshot(String title) throws Exception {
 		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		// Now you can do whatever you need to do with it, for example copy somewhere
 		File capture = new File(report.getCurrentTestFolder()+"/"+driver.getTitle() + ".png");
@@ -79,6 +79,6 @@ public class LendingPageMonitor extends SystemTestCase4 {
 		// BufferedImage image = new Robot().createScreenCapture(new Rectangle(
 		// Toolkit.getDefaultToolkit().getScreenSize()));
 		// ImageIO.write(image, "png", capture);
-		return capture;
+		return driver.getTitle();
 	}
 }
