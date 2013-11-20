@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import jsystem.framework.report.Reporter.ReportAttribute;
 import jsystem.utils.FileUtils;
 import junit.framework.SystemTestCase4;
 
@@ -44,9 +45,9 @@ public class LendingPageMonitor extends SystemTestCase4 {
 		// TODO here should be a loop for all urls from file
 		ArrayList<String> urlList = parser.getUrlList();
 		for (String url : urlList) {
-			report.startLevel(url);
+			//report.startLevel(url);
 			testFiveFieldsSite(url);
-			report.stopLevel();
+			//report.stopLevel();
 		}
 	}
 
@@ -60,22 +61,30 @@ public class LendingPageMonitor extends SystemTestCase4 {
 							null));
 			FiveFieldsLendingPage page = new FiveFieldsLendingPage(driver);
 			page.fillDetails("Test", "test@test.com");
-			report.report(url + " Was Ok");
+			String orderid = page.getOrderId();
+			if (orderid != null) {
+				report.report(url + " Page is online, " + orderid,ReportAttribute.BOLD);
+			} else {
+				report.report(url + " Could not get Order ID", report.FAIL);
+			}
 		} catch (Exception e) {
-			String captureFileName= takeScreenshot(url);
-			String ex = e.getMessage().toString();
-			report.report(ex, report.FAIL);
-			report.addLink("Click Here for Screenshot",
-					captureFileName);
+			String captureFileName = takeScreenshot(url);
+			//String ex = e.getMessage().toString();
+			//report.report(ex, report.FAIL);
+			report.report("Error in "+url,report.FAIL);
+			report.addLink("Click Here for Screenshot", captureFileName);
 
 		}
 	}
 
 	protected String takeScreenshot(String title) throws Exception {
-		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		// Now you can do whatever you need to do with it, for example copy somewhere
-		File capture = new File(report.getCurrentTestFolder()+"/"+driver.getTitle() + ".png");
-		FileUtils.copyFile(scrFile, capture);	
+		File scrFile = ((TakesScreenshot) driver)
+				.getScreenshotAs(OutputType.FILE);
+		// Now you can do whatever you need to do with it, for example copy
+		// somewhere
+		File capture = new File(report.getCurrentTestFolder() + "/"
+				+ driver.getTitle().replace("!","").replace("|","") + ".png");
+		FileUtils.copyFile(scrFile, capture);
 		// BufferedImage image = new Robot().createScreenCapture(new Rectangle(
 		// Toolkit.getDefaultToolkit().getScreenSize()));
 		// ImageIO.write(image, "png", capture);
