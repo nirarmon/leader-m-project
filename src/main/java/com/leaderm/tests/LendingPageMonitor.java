@@ -66,7 +66,8 @@ public class LendingPageMonitor extends SystemTestCase4 {
 				mailClient.report(url, true, orderid, null, null);
 			} else {
 				report.report(url + " Could not get Order ID", report.FAIL);
-				mailClient.report(url, false, "0", null, null);
+				File captureFile = takeScreenshot(url);
+				mailClient.report(url, false, "Error in Order ID", captureFile.getName(), captureFile.getAbsolutePath());
 			}
 		} catch (Exception e) {
 			File captureFile = takeScreenshot(url);
