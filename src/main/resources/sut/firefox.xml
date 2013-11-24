@@ -4,10 +4,19 @@
 		<webDriver>FIREFOX_DRIVER</webDriver>
 		<domain>http://www.1112.net/lastpage.html</domain>
 		<seleniumTimeOut>15000</seleniumTimeOut>
-		<firefoxProfile>C:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\ru3a5vsl.default</firefoxProfile>
+<!--  		<firefoxProfile>C:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\ru3a5vsl.default --> -->
+<!--  		</firefoxProfile>  -->
 	</webDriver>
 	<parser>
-	    <class>com.leaderm.infra.FileParser</class>
-	    <fileName>c:\dev\sites.txt</fileName>
+		<class>com.leaderm.infra.FileParser</class>
+		<fileName>c:\dev\sites.txt</fileName>
 	</parser>
+	<mailClient>
+		<class>com.leaderm.infra.mail.MailClient</class>
+		<host>smtp.gmail.com</host>
+		<port>587</port>
+		<mailFrom>leader.media.share@gmail.com</mailFrom>
+		<password>leader2013</password>
+		<mailTo>michael@leader-m.com</mailTo>
+	</mailClient>
 </sut>
