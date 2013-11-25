@@ -3,13 +3,13 @@
 		<class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
 		<webDriver>FIREFOX_DRIVER</webDriver>
 		<domain>http://www.1112.net/lastpage.html</domain>
-		<seleniumTimeOut>15000</seleniumTimeOut>
-<!--  		<firefoxProfile>C:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\ru3a5vsl.default --> -->
-<!--  		</firefoxProfile>  -->
+		<seleniumTimeOut>5000</seleniumTimeOut>
+ 		<firefoxProfile>C:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\ru3a5vsl.default</firefoxProfile> 
 	</webDriver>
 	<parser>
 		<class>com.leaderm.infra.FileParser</class>
-		<fileName>c:\dev\sites.txt</fileName>
+		<urlListFileName>c:\dev\sites.txt</urlListFileName>
+		<emailListFileName>c:\dev\email.txt</emailListFileName>
 	</parser>
 	<mailClient>
 		<class>com.leaderm.infra.mail.MailClient</class>

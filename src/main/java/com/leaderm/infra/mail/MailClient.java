@@ -27,28 +27,44 @@ public class MailClient extends SystemObjectImpl {
 		msg.append("<table border=\"1\"><tr><th>Site URL</th><th>Status</th><th>OrderId</th><th>Screenshot</th></tr>");
 	}
 
-	public void report(String url, boolean status,String orderId, String imageName,
-			String imagePath) {
-		if (status){
-			msg.append("<tr bgcolor=\"#00FF00\"><td>"+url+"</td><td>Pass</td><td>"+orderId+"</td><td>None</td></tr>");
-		}else{
+	public void report(String url, boolean status, String orderId,
+			String imageName, String imagePath) {
+		if (status) {
+			msg.append("<tr bgcolor=\"#00FF00\"><td>" + url
+					+ "</td><td>Pass</td><td>" + orderId
+					+ "</td><td>None</td></tr>");
+		} else {
 			if (imageName != null) {
 				inlineImages.put(imageName.replace(" ", ""), imagePath);
 			}
-			msg.append("<tr bgcolor=\"red\"><td>"+url+"</td><td>Fail</td><td>None</td><td><a href=\"cid:"+imageName.replace(" ", "")+"\">click here</a></td></tr>");
+			msg.append("<tr bgcolor=\"red\"><td>" + url
+					+ "</td><td>Fail</td><td>None</td><td><a href=\"cid:"
+					+ imageName.replace(" ", "")
+					+ "\">click here</a></td></tr>");
 
 		}
-		
 
 	}
 
-	public void sendMail() {
+	public void sendMail(String title) {
 		msg.append("</table></html>");
-		String subject = "Monitor Result for " + DateUtils.getDate();
+		String subject = title;
 
 		try {
 			EmbeddedImageEmailUtil.send(host, port, mailFrom, password, mailTo,
 					subject, msg.toString(), inlineImages);
+			report.report("Email sent.");
+		} catch (Exception ex) {
+			report.report("Could not send email.");
+			ex.printStackTrace();
+		}
+	}
+
+	public void sendMail(String title, String body) {
+		String subject = title;
+		try {
+			EmbeddedImageEmailUtil.send(host, port, mailFrom, password, mailTo,
+					subject, body, inlineImages);
 			report.report("Email sent.");
 		} catch (Exception ex) {
 			report.report("Could not send email.");

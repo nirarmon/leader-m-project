@@ -1,10 +1,13 @@
 package com.leaderm.tests;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import jsystem.framework.report.Reporter;
 import jsystem.framework.report.Reporter.ReportAttribute;
+import jsystem.utils.DateUtils;
 import jsystem.utils.FileUtils;
 import junit.framework.SystemTestCase4;
 
@@ -15,12 +18,14 @@ import org.junit.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.python.core.exceptions;
 
 import com.leaderm.infra.FileParser;
-import com.leaderm.infra.FiveFieldsLendingPage;
+import com.leaderm.infra.FiveFieldsLandingPage;
+import com.leaderm.infra.StatsReport;
 import com.leaderm.infra.mail.MailClient;
 
-public class LendingPageMonitor extends SystemTestCase4 {
+public class LandingPageMonitor extends SystemTestCase4 {
 
 	WebDriverSystemObject webDriverSystemObject;
 	WebDriver driver;
@@ -37,25 +42,40 @@ public class LendingPageMonitor extends SystemTestCase4 {
 	}
 
 	@Test
+	public void getStat() throws Exception {
+		ArrayList<String> emailList = parser.getEmailList();
+		StatsReport report = new StatsReport(driver);
+		report.register();
+		for (String email : emailList) {
+			report.getStats(email);
+		}
+		String table = report.getHTMLTable();
+		mailClient.sendMail("Statistics Result for " + DateUtils.getDate(),
+				table);
+
+	}
+
+	@Test
 	public void runTestOnSite() throws Exception {
 		ArrayList<String> urlList = parser.getUrlList();
-		//create cookie on lead site
-		driver.navigate().to("http://leads.esteticlub.com/set_test_cookie.php?set=on");
+		// create cookie on lead site
+		driver.navigate().to(
+				"http://leads.esteticlub.com/set_test_cookie.php?set=on");
 		for (String url : urlList) {
 			testFiveFieldsSite(url);
 		}
-		//remove cookie
+		// remove cookie
 		driver.navigate().to("http://leads.esteticlub.com/set_test_cookie.php");
-
+		mailClient.sendMail("Monitor Result for " + DateUtils.getDate());
 	}
 
 	private void testFiveFieldsSite(String url) throws Exception {
 		try {
-			driver.navigate().to(url+"");
-			//navigate to site 
-			driver.navigate().to(url);	
-			//populate page object
-			FiveFieldsLendingPage page = new FiveFieldsLendingPage(driver);
+			driver.navigate().to(url + "");
+			// navigate to site
+			driver.navigate().to(url);
+			// populate page object
+			FiveFieldsLandingPage page = new FiveFieldsLandingPage(driver);
 			page.fillDetails("Test", "test@test.com");
 			String orderid = page.getOrderId();
 			if (orderid != null) {
@@ -65,7 +85,8 @@ public class LendingPageMonitor extends SystemTestCase4 {
 			} else {
 				report.report(url + " Could not get Order ID", Reporter.FAIL);
 				File captureFile = takeScreenshot(url);
-				mailClient.report(url, false, "Error in Order ID", captureFile.getName(), captureFile.getAbsolutePath());
+				mailClient.report(url, false, "Error in Order ID",
+						captureFile.getName(), captureFile.getAbsolutePath());
 			}
 		} catch (Exception e) {
 			File captureFile = takeScreenshot(url);
@@ -85,17 +106,12 @@ public class LendingPageMonitor extends SystemTestCase4 {
 		File capture = new File(report.getCurrentTestFolder() + "/"
 				+ driver.getTitle().replace("!", "").replace("|", "") + ".jpg");
 		FileUtils.copyFile(scrFile, capture);
-		//ImageResizer.resizeImg(scrFile, capture);
 		scrFile.delete();
-		// FileUtils.copyFile(scrFile, resizedCapture);
-		// BufferedImage image = new Robot().createScreenCapture(new Rectangle(
-		// Toolkit.getDefaultToolkit().getScreenSize()));
-		// ImageIO.write(image, "png", capture);
 		return capture;
 	}
 
-	@After
-	public void sendMail() throws Exception {
-		mailClient.sendMail();
-	}
+	// @After
+	// public void sendMail() throws Exception {
+	// 
+	// }
 }

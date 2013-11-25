@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.google.common.io.PatternFilenameFilter;
 
-public class FiveFieldsLendingPage extends AbstractPage {
+public class FiveFieldsLandingPage extends AbstractPage {
 
 	@FindBy(id = "fname")
 	WebElement nameField;
@@ -36,7 +36,7 @@ public class FiveFieldsLendingPage extends AbstractPage {
 	@FindBy(xpath = "//input[@type=\"submit\"]")
 	WebElement submitBtn;
 
-	public FiveFieldsLendingPage(WebDriver driver) {
+	public FiveFieldsLandingPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 
