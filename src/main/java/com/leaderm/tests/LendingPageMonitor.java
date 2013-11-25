@@ -1,9 +1,9 @@
 package com.leaderm.tests;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
+import jsystem.framework.report.Reporter;
 import jsystem.framework.report.Reporter.ReportAttribute;
 import jsystem.utils.FileUtils;
 import junit.framework.SystemTestCase4;
@@ -12,7 +12,6 @@ import org.jsystem.webdriver_so.WebDriverSystemObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -39,24 +38,23 @@ public class LendingPageMonitor extends SystemTestCase4 {
 
 	@Test
 	public void runTestOnSite() throws Exception {
-
-		// TODO here should be a loop for all urls from file
 		ArrayList<String> urlList = parser.getUrlList();
+		//create cookie on lead site
+		driver.navigate().to("http://leads.esteticlub.com/set_test_cookie.php?set=on");
 		for (String url : urlList) {
-			// report.startLevel(url);
 			testFiveFieldsSite(url);
-			// report.stopLevel();
 		}
+		//remove cookie
+		driver.navigate().to("http://leads.esteticlub.com/set_test_cookie.php");
+
 	}
 
 	private void testFiveFieldsSite(String url) throws Exception {
 		try {
-			URL urladdr = new URL(url);
-
-			driver.navigate().to(url);
-			driver.manage().addCookie(
-					new Cookie("Imtest", "Imtest", urladdr.getHost(), null,
-							null));
+			driver.navigate().to(url+"");
+			//navigate to site 
+			driver.navigate().to(url);	
+			//populate page object
 			FiveFieldsLendingPage page = new FiveFieldsLendingPage(driver);
 			page.fillDetails("Test", "test@test.com");
 			String orderid = page.getOrderId();
@@ -65,15 +63,13 @@ public class LendingPageMonitor extends SystemTestCase4 {
 						ReportAttribute.BOLD);
 				mailClient.report(url, true, orderid, null, null);
 			} else {
-				report.report(url + " Could not get Order ID", report.FAIL);
+				report.report(url + " Could not get Order ID", Reporter.FAIL);
 				File captureFile = takeScreenshot(url);
 				mailClient.report(url, false, "Error in Order ID", captureFile.getName(), captureFile.getAbsolutePath());
 			}
 		} catch (Exception e) {
 			File captureFile = takeScreenshot(url);
-			// String ex = e.getMessage().toString();
-			// report.report(ex, report.FAIL);
-			report.report("Error in " + url, report.FAIL);
+			report.report("Error in " + url, Reporter.FAIL);
 			report.addLink("Click Here for Screenshot", captureFile.getName());
 			mailClient.report(url, false, "0", captureFile.getName(),
 					captureFile.getAbsolutePath());
