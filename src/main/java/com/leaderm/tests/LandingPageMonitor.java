@@ -18,7 +18,6 @@ import org.junit.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.python.core.exceptions;
 
 import com.leaderm.infra.FileParser;
 import com.leaderm.infra.FiveFieldsLandingPage;
@@ -50,9 +49,8 @@ public class LandingPageMonitor extends SystemTestCase4 {
 			report.getStats(email);
 		}
 		String table = report.getHTMLTable();
-		mailClient.sendMail("Statistics Result for " + DateUtils.getDate(),
+		mailClient.sendMail("Leads Summary Report for " + DateUtils.getDate(),
 				table);
-
 	}
 
 	@Test
