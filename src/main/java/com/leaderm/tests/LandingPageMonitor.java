@@ -1,7 +1,6 @@
 package com.leaderm.tests;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -12,7 +11,6 @@ import jsystem.utils.FileUtils;
 import junit.framework.SystemTestCase4;
 
 import org.jsystem.webdriver_so.WebDriverSystemObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.OutputType;
@@ -49,8 +47,22 @@ public class LandingPageMonitor extends SystemTestCase4 {
 			report.getStats(email);
 		}
 		String table = report.getHTMLTable();
-		mailClient.sendMail("Leads Summary Report for " + DateUtils.getDate(),
+		mailClient.sendMail("Leads Summary Report for " + getYesterdayDate(),
 				table);
+	}
+
+	private String getYesterdayDate() throws Exception {
+
+		StringBuffer yesterday = new StringBuffer();
+		Calendar calendar = Calendar.getInstance();
+		yesterday.append(calendar.get(Calendar.DAY_OF_MONTH) - 1);
+		yesterday.append("-");
+		yesterday.append(calendar.get(Calendar.MONTH) + 1);
+		yesterday.append("-");
+		yesterday.append(calendar.get(Calendar.YEAR));
+
+		return yesterday.toString();
+
 	}
 
 	@Test
@@ -110,6 +122,6 @@ public class LandingPageMonitor extends SystemTestCase4 {
 
 	// @After
 	// public void sendMail() throws Exception {
-	// 
+	//
 	// }
 }
