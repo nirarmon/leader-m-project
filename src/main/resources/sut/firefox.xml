@@ -4,7 +4,7 @@
 		<webDriver>FIREFOX_DRIVER</webDriver>
 		<domain>http://www.1112.net/lastpage.html</domain>
 		<seleniumTimeOut>5000</seleniumTimeOut>
- 		<firefoxProfile>/root/Dropbox/Leader Media/IT/Jenkins/FirefoxProfile/jenkins</firefoxProfile> 
+ 		<firefoxProfile>/root/Dropbox/Leader Media/IT/Jenkins/FirefoxProfile/</firefoxProfile> 
 	</webDriver>
 	<parser>
 		<class>com.leaderm.infra.FileParser</class>
