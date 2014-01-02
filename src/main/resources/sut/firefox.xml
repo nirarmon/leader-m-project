@@ -8,8 +8,8 @@
 	</webDriver>
 	<parser>
 		<class>com.leaderm.infra.FileParser</class>
-		<urlListFileName>c:\dev\sites.txt</urlListFileName>
-		<emailListFileName>c:\dev\email.txt</emailListFileName>
+		<urlListFileName>/root/Dropbox/Leader Media/IT/Jenkins/sites.txt</urlListFileName>
+		<emailListFileName>/root/Dropbox/Leader Media/IT/Jenkins/email.txt</emailListFileName>
 	</parser>
 	<mailClient>
 		<class>com.leaderm.infra.mail.MailClient</class>
