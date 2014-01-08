@@ -24,10 +24,11 @@ import com.leaderm.infra.mail.MailClient;
 
 public class LandingPageMonitor extends SystemTestCase4 {
 
-	WebDriverSystemObject webDriverSystemObject;
-	WebDriver driver;
-	FileParser parser;
-	MailClient mailClient;
+	private WebDriverSystemObject webDriverSystemObject;
+	private WebDriver driver;
+	private FileParser parser;
+	private MailClient mailClient;
+	private boolean errors = false;
 
 	@Before
 	public void setUp() throws Exception {
@@ -76,7 +77,10 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		}
 		// remove cookie
 		driver.navigate().to("http://leads.esteticlub.com/set_test_cookie.php");
-		mailClient.sendMail("Monitor Result for " + DateUtils.getDate());
+		//send mail only if errors were found during the run
+		if (errors){
+			mailClient.sendMail("Monitor Result for " + DateUtils.getDate());
+		}
 	}
 
 	private void testFiveFieldsSite(String url) throws Exception {
@@ -93,12 +97,16 @@ public class LandingPageMonitor extends SystemTestCase4 {
 						ReportAttribute.BOLD);
 				mailClient.report(url, true, orderid, null, null);
 			} else {
+				// set errors to true for mail
+				errors = true;
 				report.report(url + " Could not get Order ID", Reporter.FAIL);
 				File captureFile = takeScreenshot(url);
 				mailClient.report(url, false, "Error in Order ID",
 						captureFile.getName(), captureFile.getAbsolutePath());
 			}
 		} catch (Exception e) {
+			// set errors to true for mail 
+			errors = true;
 			File captureFile = takeScreenshot(url);
 			report.report("Error in " + url, Reporter.FAIL);
 			report.addLink("Click Here for Screenshot", captureFile.getName());
@@ -120,8 +128,5 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		return capture;
 	}
 
-	// @After
-	// public void sendMail() throws Exception {
-	//
-	// }
+	
 }
