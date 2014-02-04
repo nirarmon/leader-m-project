@@ -19,10 +19,10 @@ public class FileParser extends SystemObjectImpl {
 	}
 
 	public ArrayList<String> getList(String fileName) throws Exception {
-		String[] urls = FileUtils.read(fileName).split("\n");
+		String[] urls = FileUtils.read(fileName).split(System.getProperty("line.separator"));
 		ArrayList<String> list = new ArrayList<String>();
 		for (String url : urls) {
-			list.add(url);
+			list.add(url.trim());
 		}
 		return list;
 
