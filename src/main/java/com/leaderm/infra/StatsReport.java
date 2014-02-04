@@ -48,7 +48,7 @@ public class StatsReport extends AbstractPage {
 					.className("columncampId"));
 
 			WebElement total = driver.findElement(By
-					.xpath("//td[@align=\"center\"]"));
+					.xpath("//span[@class=\"badge\"]"));
 			for (int i = 0; i < compiegne.size(); i++) {
 				tmp.put(compiegne.get(i).getText(), count.get(i).getText());
 			}
