@@ -1,4 +1,4 @@
-<sut>
+<?xml version="1.0" encoding="UTF-8"?><sut>
 	<webDriver>
 		<class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
 		<webDriver>FIREFOX_DRIVER</webDriver>
@@ -9,6 +9,7 @@
 		<class>com.leaderm.infra.FileParser</class>
 		<urlListFileName>/root/Dropbox/Leader Media/IT/Jenkins/sites.txt</urlListFileName>
 		<emailListFileName>/root/Dropbox/Leader Media/IT/Jenkins/email.txt</emailListFileName>
+		<partnerListFileName>/root/Dropbox/Leader Media/IT/Jenkins/affiliate.txt</partnerListFileName>
 	</parser>
 	<mailClient>
 		<class>com.leaderm.infra.mail.MailClient</class>

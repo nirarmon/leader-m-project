@@ -9,14 +9,9 @@ public class FileParser extends SystemObjectImpl {
 
 	private String urlListFileName;
 	private String emailListFileName;
+	private String partnerListFileName;
 
-	public ArrayList<String> getUrlList() throws Exception {
-		return getList(urlListFileName);
-	}
-
-	public ArrayList<String> getEmailList() throws Exception {
-		return getList(emailListFileName);
-	}
+	
 
 	public ArrayList<String> getList(String fileName) throws Exception {
 		String[] urls = FileUtils.read(fileName).split(System.getProperty("line.separator"));
@@ -50,4 +45,24 @@ public class FileParser extends SystemObjectImpl {
 		this.emailListFileName = emailListFileName;
 	}
 
+	public ArrayList<String> getPartnerList() throws Exception {
+		return  getList(partnerListFileName);
+	}
+
+	public void setPartnerListFileName(String partnerListFileName) {
+		this.partnerListFileName = partnerListFileName;
+	}
+
+	public ArrayList<String> getUrlList() throws Exception {
+		return getList(urlListFileName);
+	}
+
+	public ArrayList<String> getEmailList() throws Exception {
+		return getList(emailListFileName);
+	}
+
+	public String getPartnerListFileName() {
+		return partnerListFileName;
+	}
+	
 }

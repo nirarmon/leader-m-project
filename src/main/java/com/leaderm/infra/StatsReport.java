@@ -1,9 +1,13 @@
 package com.leaderm.infra;
 
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -34,12 +38,28 @@ public class StatsReport extends AbstractPage {
 		ok.click();
 
 	}
-
-	public void getStats(String email) throws Exception {
-		HashMap<String, String> tmp = new HashMap<String, String>();
-		String url = "http://leads.leader-m.com/en/stats.php?leadDate_from=!!!!!!!!!&leadDate_till=!!!!!!!!!!&fields%5B%5D=rcptMail&filters%5BrcptMail%5D%5B%5D=!!!!!!!&fields%5B%5D=campId&filters%5BcampId%5D=&fields%5B%5D=&username=lm&password=EwmswjLgHNv72Tu&cc="
+	
+	public void getStats(String email) throws Exception{
+		getStats(email, "http://leads.leader-m.com/en/stats.php?leadDate_from=!!!!!!!!!&leadDate_till=!!!!!!!!!!&fields%5B%5D=rcptMail&filters%5BrcptMail%5D%5B%5D=!!!!!!!&fields%5B%5D=campId&filters%5BcampId%5D=&fields%5B%5D=&username=lm&password=EwmswjLgHNv72Tu&cc="
 				.replace("!!!!!!!!!!", toDate).replace("!!!!!!!!!", fromDate)
-				.replace("!!!!!!!", URLEncoder.encode(email));
+				.replace("!!!!!!!", URLEncoder.encode(email)));
+	}
+	
+	public void getPartnerStats(String email) throws Exception{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd+MMMM+yyyy",Locale.ENGLISH);
+		//get todays date
+		Date date = new Date();
+		String today = dateFormat.format(date);
+		// get the next day date
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, 1);
+		String tomorrow = dateFormat.format(calendar.getTime());
+		getStats(email,String.format("http://leads.leader-m.com/en/stats.php?leadDate_from=%s&leadDate_till=%s&fields[]=__referrer&filters[__referrer][]=%s&fields[]=campId&filters[campId]=&fields[]=&fields[]=&fields[]=",today, tomorrow, URLEncoder.encode(email,"UTF-8")));
+	}
+
+	public void getStats(String email,String url) throws Exception {
+		HashMap<String, String> tmp = new HashMap<String, String>();
+		
 		driver.navigate().to(url);
 		try {
 			List<WebElement> count = driver.findElements(By

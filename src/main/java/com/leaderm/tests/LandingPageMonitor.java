@@ -51,9 +51,22 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		mailClient.sendMail("Leads Summary Report for " + getYesterdayDate(),
 				table);
 	}
+	
+	@Test
+	public void getAffiliateReport() throws Exception {
+		ArrayList<String> partnerList = parser.getPartnerList();
+		System.out.println("dsfv");
+		StatsReport report = new StatsReport(driver);
+		report.register();
+		for (String partnerName : partnerList) {
+			report.getPartnerStats(partnerName);
+		}
+		String table = report.getHTMLTable();
+		mailClient.sendMail("Affiliate Status Report for " + getTodayDate(),
+				table);
+	}
 
 	private String getYesterdayDate() throws Exception {
-
 		StringBuffer yesterday = new StringBuffer();
 		Calendar calendar = Calendar.getInstance();
 		yesterday.append(calendar.get(Calendar.DAY_OF_MONTH) - 1);
@@ -61,9 +74,18 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		yesterday.append(calendar.get(Calendar.MONTH) + 1);
 		yesterday.append("-");
 		yesterday.append(calendar.get(Calendar.YEAR));
-
 		return yesterday.toString();
-
+	}
+	
+	private String getTodayDate() throws Exception {
+		StringBuffer today = new StringBuffer();
+		Calendar calendar = Calendar.getInstance();
+		today.append(calendar.get(Calendar.DAY_OF_MONTH));
+		today.append("-");
+		today.append(calendar.get(Calendar.MONTH) + 1);
+		today.append("-");
+		today.append(calendar.get(Calendar.YEAR));
+		return today.toString();
 	}
 
 	@Test
