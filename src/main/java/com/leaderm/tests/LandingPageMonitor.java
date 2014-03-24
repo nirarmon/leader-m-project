@@ -1,8 +1,10 @@
 package com.leaderm.tests;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import jsystem.framework.report.Reporter;
 import jsystem.framework.report.Reporter.ReportAttribute;
@@ -62,7 +64,10 @@ public class LandingPageMonitor extends SystemTestCase4 {
 			report.getPartnerStats(partnerName);
 		}
 		String table = report.getHTMLTable();
-		mailClient.sendMail("Affiliate Status Report for " + getTodayDate(),
+		  Date dNow = new Date( );
+	      SimpleDateFormat ft =  new SimpleDateFormat ("hh:mm:ss a");
+	      String hour = ft.format(dNow);
+		mailClient.sendMail("Affiliate Status Report for " + getTodayDate()+ " "+hour,
 				table);
 	}
 
