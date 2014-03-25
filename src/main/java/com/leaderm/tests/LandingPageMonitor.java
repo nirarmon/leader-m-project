@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import jsystem.framework.TestProperties;
 import jsystem.framework.report.Reporter;
 import jsystem.framework.report.Reporter.ReportAttribute;
 import jsystem.utils.DateUtils;
@@ -31,6 +32,7 @@ public class LandingPageMonitor extends SystemTestCase4 {
 	private FileParser parser;
 	private MailClient mailClient;
 	private boolean errors = false;
+	private String mailTo;
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,6 +44,7 @@ public class LandingPageMonitor extends SystemTestCase4 {
 	}
 
 	@Test
+	@TestProperties(paramsInclude={"mailTo"})
 	public void getStat() throws Exception {
 		ArrayList<String> emailList = parser.getEmailList();
 		StatsReport report = new StatsReport(driver);
@@ -55,9 +58,9 @@ public class LandingPageMonitor extends SystemTestCase4 {
 	}
 	
 	@Test
+	@TestProperties(paramsInclude={"mailTo"})
 	public void getAffiliateReport() throws Exception {
 		ArrayList<String> partnerList = parser.getPartnerList();
-		System.out.println("dsfv");
 		StatsReport report = new StatsReport(driver);
 		report.register();
 		for (String partnerName : partnerList) {
@@ -68,7 +71,7 @@ public class LandingPageMonitor extends SystemTestCase4 {
 	      SimpleDateFormat ft =  new SimpleDateFormat ("hh:mm:ss a");
 	      String hour = ft.format(dNow);
 		mailClient.sendMail("Affiliate Status Report for " + getTodayDate()+ " "+hour,
-				table);
+				table,mailTo);
 	}
 
 	private String getYesterdayDate() throws Exception {
@@ -94,6 +97,7 @@ public class LandingPageMonitor extends SystemTestCase4 {
 	}
 
 	@Test
+	@TestProperties(paramsInclude={"mailTo"})
 	public void runTestOnSite() throws Exception {
 		ArrayList<String> urlList = parser.getUrlList();
 		// create cookie on lead site
@@ -106,7 +110,7 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		driver.navigate().to("http://leads.esteticlub.com/set_test_cookie.php");
 		//send mail only if errors were found during the run
 		if (errors){
-			mailClient.sendMail("Monitor Result for " + DateUtils.getDate());
+			mailClient.sendMail("Monitor Result for " + DateUtils.getDate(),mailTo);
 		}
 	}
 
@@ -153,6 +157,14 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		FileUtils.copyFile(scrFile, capture);
 		scrFile.delete();
 		return capture;
+	}
+
+	public String getMailTo() {
+		return mailTo;
+	}
+
+	public void setMailTo(String mailTo) {
+		this.mailTo = mailTo;
 	}
 
 	

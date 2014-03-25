@@ -14,7 +14,7 @@ public class MailClient extends SystemObjectImpl {
 	private String port;
 	private String mailFrom;
 	private String password;
-	private String mailTo;
+//	private String mailTo;
 	private StringBuilder msg;
 	private Map<String, String> inlineImages;
 
@@ -46,7 +46,7 @@ public class MailClient extends SystemObjectImpl {
 
 	}
 
-	public void sendMail(String title) {
+	public void sendMail(String title,String mailTo) {
 		msg.append("</table></html>");
 		String subject = title;
 
@@ -60,7 +60,7 @@ public class MailClient extends SystemObjectImpl {
 		}
 	}
 
-	public void sendMail(String title, String body) {
+	public void sendMail(String title, String body,String mailTo) {
 		String subject = title;
 		try {
 			EmbeddedImageEmailUtil.send(host, port, mailFrom, password, mailTo,
@@ -104,11 +104,5 @@ public class MailClient extends SystemObjectImpl {
 		this.password = password;
 	}
 
-	public String getMailTo() {
-		return mailTo;
-	}
-
-	public void setMailTo(String mailTo) {
-		this.mailTo = mailTo;
-	}
+	
 }
