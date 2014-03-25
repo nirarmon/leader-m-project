@@ -80,7 +80,7 @@ public class EmbeddedImageEmailUtil {
 			String[] to = toAddress.split(";");
 			toAddresses = new InternetAddress[to.length];
 			for (int i = 0; i < to.length; i++) {
-				toAddresses[i] = new InternetAddress(toAddress);
+				toAddresses[i] = new InternetAddress(to[i]);
 			}
 
 		} else {
