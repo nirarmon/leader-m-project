@@ -17,6 +17,6 @@
 		<port>587</port>
 		<mailFrom>leader.media.share@gmail.com</mailFrom>
 		<password>leader2013</password>
-		<mailTo>michael@leader-m.com</mailTo>
+		<mailTo>michael@leader-m.com;nir.armon33@gmail.com</mailTo>
 	</mailClient>
 </sut>
