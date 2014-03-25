@@ -76,16 +76,10 @@ public class EmbeddedImageEmailUtil {
 
 		msg.setFrom(new InternetAddress(userName));
 		InternetAddress[] toAddresses = null;
-		if (toAddress.contains(";")) {
-			String[] to = toAddress.split(";");
-			toAddresses = new InternetAddress[to.length];
-			for (int i = 0; i < to.length; i++) {
-				toAddresses[i] = new InternetAddress(to[i]);
-			}
-
-		} else {
-			toAddresses = new InternetAddress[1];
-			toAddresses[0] = new InternetAddress(toAddress);
+		String[] to = toAddress.split(";");
+		toAddresses = new InternetAddress[to.length];
+		for (int i = 0; i < to.length; i++) {
+			toAddresses[i] = new InternetAddress(to[i]);
 		}
 		msg.setRecipients(Message.RecipientType.TO, toAddresses);
 		msg.setSubject(subject);
