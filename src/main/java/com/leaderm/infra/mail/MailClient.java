@@ -51,8 +51,7 @@ public class MailClient extends SystemObjectImpl {
 		String subject = title;
 
 		try {
-			EmbeddedImageEmailUtil.send(host, port, mailFrom, password, mailTo,
-					subject, msg.toString(), inlineImages);
+			EmbeddedImageEmailUtil.send(host, port, mailFrom, password, mailTo,subject, msg.toString(), inlineImages);
 			report.report("Email sent.");
 		} catch (Exception ex) {
 			report.report("Could not send email.");
