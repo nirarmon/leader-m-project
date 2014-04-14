@@ -40,7 +40,7 @@ public class StatsReport extends AbstractPage {
 	}
 	
 	public void getStats(String email) throws Exception{
-		getStats(email, "http://leads.leader-m.com/en/stats.php?leadDate_from=!!!!!!!!!&leadDate_till=!!!!!!!!!!&fields%5B%5D=rcptMail&filters%5BrcptMail%5D%5B%5D=!!!!!!!&fields%5B%5D=campId&filters%5BcampId%5D=&fields%5B%5D=&username=lm&password=EwmswjLgHNv72Tu&cc="
+		getStats(email, "http://leads.leader-m.com/en/stats.php?leadDateField=leadDate&leadDate_from=!!!!!!!!!&leadDate_till=!!!!!!!!!!&fields%5B%5D=rcptMail&filters%5BrcptMail%5D%5B%5D=!!!!!!!&fields%5B%5D=campId&filters%5BcampId%5D=&fields%5B%5D=&username=lm&password=EwmswjLgHNv72Tu&cc="
 				.replace("!!!!!!!!!!", toDate).replace("!!!!!!!!!", fromDate)
 				.replace("!!!!!!!", URLEncoder.encode(email)));
 	}
