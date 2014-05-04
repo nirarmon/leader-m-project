@@ -53,7 +53,7 @@ public class FiveFieldsLandingPage extends AbstractPage {
 	 */
 	public boolean fillDetails(String name, String email) throws Exception {
 		nameField.sendKeys(name);
-		phoneField.sendKeys(createRandomPhoneNumber());
+		phoneField.sendKeys("89"+createRandomPhoneNumber());
 		emailField.sendKeys(email);
 		// select the first town by default
 		Select select = new Select(townSelect);
@@ -89,7 +89,7 @@ public class FiveFieldsLandingPage extends AbstractPage {
 	 * @return
 	 */
 	private String createRandomPhoneNumber() {
-		int[] array = RandomUtils.getSeveralRandomInts(0, 9, 10, new Random());
+		int[] array = RandomUtils.getSeveralRandomInts(0, 9, 8, new Random());
 		StringBuffer buffer = new StringBuffer();
 		for (int i : array) {
 			buffer.append("" + i);
