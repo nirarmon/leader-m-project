@@ -54,7 +54,7 @@ public class LandingPageMonitor extends SystemTestCase4 {
 		}
 		String table = report.getHTMLTable();
 		mailClient.sendMail("Leads Summary Report for " + getYesterdayDate(),
-				table);
+				table,mailTo);
 	}
 	
 	@Test
