@@ -34,7 +34,7 @@ public class StatsReport extends AbstractPage {
 		WebElement password = driver.findElement(By.name("password"));
 		WebElement ok = driver.findElement(By.xpath("//button[1]"));
 		username.sendKeys("lm");
-		password.sendKeys("?tA@XZ=pOAXP");
+		password.sendKeys("0sw0rAgaCuuE");
 		ok.click();
 
 	}
