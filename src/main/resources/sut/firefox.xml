@@ -7,9 +7,9 @@
 	</webDriver>
 	<parser>
 		<class>com.leaderm.infra.FileParser</class>
-		<urlListFileName>/root/Dropbox/Leader Media/IT/Jenkins/sites.txt</urlListFileName>
-		<emailListFileName>/root/Dropbox/Leader Media/IT/Jenkins/email.txt</emailListFileName>
-		<partnerListFileName>/root/Dropbox/Leader Media/IT/Jenkins/affiliate.txt</partnerListFileName>
+		<urlListFileName>C:/Users/user/Dropbox/IT/Jenkins/sites.txt</urlListFileName>
+		<emailListFileName>C:/Users/user/Dropbox/IT/Jenkins/email.txt</emailListFileName>
+		<partnerListFileName>C:/Users/user/Dropbox/IT/Jenkins/affiliate.txt</partnerListFileName>
 	</parser>
 	<mailClient>
 		<class>com.leaderm.infra.mail.MailClient</class>
